@@ -1,0 +1,40 @@
+# AWS & Pipeline Configuration
+# -------------------------------------------------------
+# Fill in your own values before running the pipeline.
+# -------------------------------------------------------
+
+aws:
+  region: "us-east-1"                       # Change to your preferred AWS region
+  profile: "default"                        # AWS CLI profile name
+
+s3:
+  bucket_name: "urban-air-quality-pipeline" # Must be globally unique — change this
+  landing_prefix: "landing/"
+  processed_prefix: "processed/"
+  gold_prefix: "gold/"
+
+openaq:
+  base_url: "https://api.openaq.io/v3"
+  # Get a free key at: https://docs.openaq.org/docs/getting-started
+  api_key: "YOUR_OPENAQ_API_KEY_HERE"
+  # City to pull data for. Examples: "London", "Delhi", "Colombo"
+  city: "London"
+  # How many past days of measurements to ingest
+  lookback_days: 7
+  # Maximum results per API page
+  limit: 1000
+
+tomtom:
+  # Get a free key (2,500 requests/day free) at: https://developer.tomtom.com/
+  api_key: "YOUR_TOMTOM_API_KEY_HERE"
+  # Bounding box for the city (min_lon, min_lat, max_lon, max_lat)
+  # Default: central London
+  bbox: "-0.1276,51.5074,0.0077,51.5200"
+
+athena:
+  database: "air_quality_db"
+  workgroup: "primary"
+  results_bucket: "s3://urban-air-quality-pipeline/athena-results/"
+
+pipeline:
+  log_level: "INFO"
